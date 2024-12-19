@@ -4,38 +4,33 @@
 
 import time
 
+# params
 num = 1000
 m1 = 3
 m2 = 5
 
+# method 1
+def iterativeSolution(num, m1, m2):
+    sum = 0
 
-## method 1
-start = time.perf_counter()
+    for i in range(num):
 
-sum = 0
-iter = 1
+        if i % m1 == 0 or i % m2 == 0:
+            sum += i
+    return sum
 
-for i in range(num):
-    if i % m1 == 0 or i % m2 == 0:
-        sum += i
+# method 2
+def gaussSum(num, m1, m2):
+    x = lambda w: (num - 1)//w
+    gaussSum = lambda u: u*x(u)*(x(u)+1)/2
+    return gaussSum(m1) + gaussSum(m2) - gaussSum(m1*m2)
 
-end = time.perf_counter()
-print("Method 1 answer: ", sum)
-passed = end - start
-print("time 1: ", passed)
+start1 = time.perf_counter()
+print(f"Iterative answer: {iterativeSolution(num, m1, m2)}")
+print(f"Ran in {(time.perf_counter() - start1)*1000} ms")
+print()
 
-del iter
-
-
-## method 2
-start2 = time.perf_counter()
-
-x = lambda w: (num - 1)//w
-gaussSum = lambda u: u*x(u)*(x(u)+1)/2
-ans = gaussSum(m1) + gaussSum(m2) - gaussSum(m1*m2)
-
-end2 = time.perf_counter()
-print("Method 2 answer: ", ans)
-passed2 = end2 - start2
-print("time 2: ", passed2)
-
+start2 = time.perf_counter()    
+print(f"Gause sum answer: {gaussSum(num, m1, m2)}")
+print(f"Ran in {(time.perf_counter() - start2)*1000} ms")
+print()
